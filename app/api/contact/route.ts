@@ -7,8 +7,7 @@ import { rateLimit } from '@/lib/rate-limit'
 // Validation Schema
 // =============================================================================
 const contactSchema = z.object({
-  firstName: z.string().min(2, 'Prénom trop court').max(50, 'Prénom trop long'),
-  lastName: z.string().min(2, 'Nom trop court').max(50, 'Nom trop long'),
+  name: z.string().min(2, 'Nom trop court').max(100, 'Nom trop long'),
   email: z.string().email('Email invalide'),
   company: z.string().max(100, 'Nom d\'entreprise trop long').optional(),
   phone: z
@@ -79,8 +78,7 @@ async function triggerMakeWebhook(data: ContactFormData, submissionId: string) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id: submissionId,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        name: data.name,
         email: data.email,
         company: data.company || null,
         phone: data.phone || null,
@@ -149,8 +147,7 @@ export async function POST(request: NextRequest) {
     // Save to database
     const submission = await prisma.contactSubmission.create({
       data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
+        name: data.name,
         email: data.email.toLowerCase(),
         company: data.company || null,
         phone: data.phone || null,
