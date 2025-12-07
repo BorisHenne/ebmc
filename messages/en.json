@@ -69,33 +69,85 @@
     }
   },
   "sap": {
-    "title": "SAP",
-    "subtitle": "ERP serving performance and business continuity",
-    "intro": "At EBMC GROUP, SAP is not just a tool: it is the historical foundation of our expertise since our creation in 2006.",
-    "migration": {
-      "title": "ECC → S/4HANA Migration",
-      "brownfield": "Technical migration with business continuity",
-      "greenfield": "Complete process overhaul, new architecture",
-      "selective": "Hybrid approach, adapted to complex challenges"
+    "badge": "SAP Silver Partner",
+    "meta": {
+      "title": "SAP - EBMC GROUP | S/4HANA & Cloud Expertise",
+      "description": "SAP experts since 2006. ECC to S/4HANA migration, RISE, Cloud, functional modules. SAP Silver Partner with +2,500 qualified consultants."
     },
-    "cloud": {
-      "title": "SAP Cloud (RISE & S/4HANA Cloud)",
-      "audit": "Audit & RISE migration preparation",
-      "integration": "Integration with hyperscalers (AWS, Azure, GCP)",
-      "deployment": "Modular deployment (public / private cloud)"
+    "hero": {
+      "title": "SAP excellence driving your transformation",
+      "subtitle": "Since 2006, we support companies in their most ambitious SAP projects. S/4HANA migration, Cloud, functional modules: our expertise is your asset.",
+      "cta": "Discuss your project",
+      "secondary": "View our references"
     },
-    "modules": {
-      "title": "Functional modules",
-      "finance": "Finance & management control: FI / CO",
-      "logistics": "Purchasing & logistics: MM / SD / EWM",
-      "production": "Production & quality: PP / QM",
-      "hr": "HR & talents: HCM / SuccessFactors",
-      "crm": "Customer relationship: SAP CX / CRM"
+    "services": {
+      "title": "Our SAP expertise",
+      "subtitle": "A complete offering to address all your ERP challenges",
+      "migration": {
+        "title": "S/4HANA Migration",
+        "description": "Complete support for your transition to S/4HANA, whatever your approach.",
+        "features": {
+          "brownfield": "Brownfield: technical migration with business continuity",
+          "greenfield": "Greenfield: complete process redesign",
+          "selectiveData": "Selective Data Transition: hybrid approach"
+        }
+      },
+      "cloud": {
+        "title": "SAP Cloud & RISE",
+        "description": "Deploy SAP in the cloud with a modern and scalable architecture.",
+        "features": {
+          "rise": "RISE with SAP: complete cloud transformation",
+          "hyperscalers": "AWS, Azure, Google Cloud integration",
+          "modular": "Public/private modular deployment"
+        }
+      },
+      "modules": {
+        "title": "Functional Modules",
+        "description": "Expertise across all SAP modules to cover all your business processes.",
+        "features": {
+          "finance": "Finance & Control: FI / CO / TR",
+          "logistics": "Purchasing & Logistics: MM / SD / EWM",
+          "hr": "HR & Talents: HCM / SuccessFactors"
+        }
+      },
+      "development": {
+        "title": "SAP Development",
+        "description": "Custom developments to extend your system capabilities.",
+        "features": {
+          "abap": "ABAP / ABAP OO / CDS Views",
+          "fiori": "SAP Fiori / UI5 / UX Design",
+          "btp": "SAP BTP: cloud-native extensions"
+        }
+      },
+      "data": {
+        "title": "Data & Analytics",
+        "description": "Harness the power of your SAP data to drive your business.",
+        "features": {
+          "integration": "Multi-source data integration",
+          "analytics": "SAP Analytics Cloud (SAC)",
+          "datasphere": "SAP Datasphere & Data Warehouse"
+        }
+      },
+      "methodology": {
+        "title": "Project Methodology",
+        "description": "A proven approach to ensure your project success.",
+        "features": {
+          "activate": "SAP Activate: agile methodology",
+          "sprints": "Short sprints and regular deliverables",
+          "support": "Post-go-live support and maintenance"
+        }
+      }
     },
     "stats": {
-      "consultants": "+2,500 qualified SAP consultants",
-      "experience": "+19 years of field expertise",
-      "partner": "SAP Silver Partner"
+      "years": "years of expertise",
+      "consultants": "SAP consultants",
+      "partner": "SAP Partner",
+      "satisfaction": "satisfaction"
+    },
+    "cta": {
+      "title": "Ready to transform your IS with SAP?",
+      "subtitle": "Our experts are available to analyze your needs and propose the best approach.",
+      "button": "Contact us"
     }
   },
   "ict": {
