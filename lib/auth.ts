@@ -5,6 +5,7 @@ import AppleProvider from "next-auth/providers/apple";
 import AzureADProvider from "next-auth/providers/azure-ad";
 import EmailProvider from "next-auth/providers/email";
 import type { NextAuthConfig } from "next-auth";
+import type { Adapter } from "next-auth/adapters";
 import type { Role } from "@prisma/client";
 import { prisma } from "./db";
 
@@ -55,7 +56,7 @@ const BoondProvider = {
 // NextAuth Configuration
 // =============================================================================
 export const authConfig: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
 
   providers: [
     // Google OAuth
