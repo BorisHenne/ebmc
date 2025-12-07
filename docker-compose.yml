@@ -39,6 +39,7 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://${POSTGRES_USER:-ebmc}:${POSTGRES_PASSWORD:-ebmc_secret}@db:5432/${POSTGRES_DB:-ebmc}?schema=public
+      - JWT_SECRET=${JWT_SECRET:-ebmc-jwt-secret-change-in-production}
     depends_on:
       db:
         condition: service_healthy
