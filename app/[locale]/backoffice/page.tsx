@@ -55,7 +55,12 @@ export default async function BackofficePage({ params }: Props) {
       }),
     ])
 
-  const stats = [
+  const stats: Array<{
+    label: string
+    value: number | string
+    icon: string
+    trend: 'up' | 'down' | 'ok' | null
+  }> = [
     {
       label: t('dashboard.stats.totalContacts'),
       value: contactCount,
