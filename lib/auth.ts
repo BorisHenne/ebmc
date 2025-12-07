@@ -225,7 +225,8 @@ export const authConfig: NextAuthConfig = {
       });
     },
 
-    async signOut({ session }) {
+    async signOut(message: any) {
+      const session = message?.session;
       if (session?.userId) {
         await prisma.auditLog.create({
           data: {
