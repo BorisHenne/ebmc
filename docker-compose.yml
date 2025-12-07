@@ -1,6 +1,6 @@
 # =============================================================================
 # EBMC GROUP - Docker Compose
-# Configuration pour NAS (Synology, QNAP, Unraid, etc.)
+# Configuration pour NAS UGreen DXP4800 Plus
 # =============================================================================
 
 services:
@@ -10,25 +10,21 @@ services:
   db:
     image: mysql:8.0
     container_name: ebmc-db
-    restart: unless-stopped
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-ebmc_root_2024}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-ebmc_group}
-      MYSQL_USER: ${MYSQL_USER:-ebmc_user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ebmc_password_2024}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./docker/mysql/init:/docker-entrypoint-initdb.d
-    ports:
-      - "${MYSQL_PORT:-3307}:3306"
     networks:
       - ebmc-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-ebmc_root_2024}"]
-      interval: 10s
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 10
     command: --default-authentication-plugin=mysql_native_password
 
   # ---------------------------------------------------------------------------
@@ -38,65 +34,42 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
-        NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
     container_name: ebmc-app
-    restart: unless-stopped
+    restart: always
+    ports:
+      - "${APP_PORT}:3000"
+    volumes:
+      - ./public/images:/app/public/images:ro
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - APPLE_CLIENT_ID=${APPLE_CLIENT_ID:-}
+      - APPLE_CLIENT_SECRET=${APPLE_CLIENT_SECRET:-}
+      - MICROSOFT_CLIENT_ID=${MICROSOFT_CLIENT_ID:-}
+      - MICROSOFT_CLIENT_SECRET=${MICROSOFT_CLIENT_SECRET:-}
+      - MICROSOFT_TENANT_ID=${MICROSOFT_TENANT_ID:-common}
+      - BOOND_CLIENT_ID=${BOOND_CLIENT_ID:-}
+      - BOOND_CLIENT_SECRET=${BOOND_CLIENT_SECRET:-}
+      - BOOND_INSTANCE=${BOOND_INSTANCE:-}
+      - BOOND_API_USER=${BOOND_API_USER:-}
+      - BOOND_API_TOKEN=${BOOND_API_TOKEN:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM=${SMTP_FROM:-}
+      - MAKE_WEBHOOK_CONTACT=${MAKE_WEBHOOK_CONTACT:-}
+      - MAKE_WEBHOOK_CANDIDATE=${MAKE_WEBHOOK_CANDIDATE:-}
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      # Database
-      DATABASE_URL: mysql://${MYSQL_USER:-ebmc_user}:${MYSQL_PASSWORD:-ebmc_password_2024}@db:3306/${MYSQL_DATABASE:-ebmc_group}
-      
-      # NextAuth
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      
-      # OAuth Providers (optional - set in .env)
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
-      APPLE_CLIENT_ID: ${APPLE_CLIENT_ID:-}
-      APPLE_CLIENT_SECRET: ${APPLE_CLIENT_SECRET:-}
-      MICROSOFT_CLIENT_ID: ${MICROSOFT_CLIENT_ID:-}
-      MICROSOFT_CLIENT_SECRET: ${MICROSOFT_CLIENT_SECRET:-}
-      MICROSOFT_TENANT_ID: ${MICROSOFT_TENANT_ID:-common}
-      
-      # Boondmanager
-      BOOND_CLIENT_ID: ${BOOND_CLIENT_ID:-}
-      BOOND_CLIENT_SECRET: ${BOOND_CLIENT_SECRET:-}
-      BOOND_INSTANCE: ${BOOND_INSTANCE:-}
-      BOOND_API_USER: ${BOOND_API_USER:-}
-      BOOND_API_TOKEN: ${BOOND_API_TOKEN:-}
-      
-      # SMTP
-      SMTP_HOST: ${SMTP_HOST:-}
-      SMTP_PORT: ${SMTP_PORT:-587}
-      SMTP_USER: ${SMTP_USER:-}
-      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
-      SMTP_FROM: ${SMTP_FROM:-}
-      
-      # Make.com Webhooks
-      MAKE_WEBHOOK_CONTACT: ${MAKE_WEBHOOK_CONTACT:-}
-      MAKE_WEBHOOK_CANDIDATE: ${MAKE_WEBHOOK_CANDIDATE:-}
-      
-      # App
-      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
-      NODE_ENV: ${NODE_ENV:-production}
-    ports:
-      - "${APP_PORT:-3080}:3000"
     networks:
       - ebmc-network
-    volumes:
-      - app_uploads:/app/public/uploads
-    labels:
-      # Traefik labels (si utilisé)
-      - "traefik.enable=true"
-      - "traefik.http.routers.ebmc.rule=Host(`${DOMAIN:-ebmc.local}`)"
-      - "traefik.http.routers.ebmc.entrypoints=websecure"
-      - "traefik.http.routers.ebmc.tls.certresolver=letsencrypt"
-      - "traefik.http.services.ebmc.loadbalancer.server.port=3000"
 
   # ---------------------------------------------------------------------------
   # Adminer (Database GUI) - Optionnel
@@ -104,66 +77,19 @@ services:
   adminer:
     image: adminer:latest
     container_name: ebmc-adminer
-    restart: unless-stopped
-    depends_on:
-      - db
+    restart: always
     ports:
       - "${ADMINER_PORT:-8180}:8080"
-    networks:
-      - ebmc-network
     environment:
       ADMINER_DEFAULT_SERVER: db
-
-  # ---------------------------------------------------------------------------
-  # Traefik Reverse Proxy - Optionnel (pour HTTPS)
-  # ---------------------------------------------------------------------------
-  traefik:
-    image: traefik:v3.0
-    container_name: ebmc-traefik
-    restart: unless-stopped
-    command:
-      - "--api.dashboard=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik_certs:/letsencrypt
+    depends_on:
+      - db
     networks:
       - ebmc-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN:-ebmc.local}`)"
-      - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_AUTH:-admin:$$apr1$$xyz$$hash}"
-    profiles:
-      - proxy
 
-# =============================================================================
-# Networks
-# =============================================================================
+volumes:
+  mysql_data:
+
 networks:
   ebmc-network:
     driver: bridge
-    name: ebmc-network
-
-# =============================================================================
-# Volumes
-# =============================================================================
-volumes:
-  mysql_data:
-    name: ebmc-mysql-data
-  app_uploads:
-    name: ebmc-app-uploads
-  traefik_certs:
-    name: ebmc-traefik-certs
