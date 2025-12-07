@@ -52,6 +52,11 @@ export default async function BackofficePage({ params }: Props) {
       prisma.auditLog.findMany({
         take: 10,
         orderBy: { createdAt: 'desc' },
+        include: {
+          user: {
+            select: { name: true, email: true, image: true },
+          },
+        },
       }),
     ])
 

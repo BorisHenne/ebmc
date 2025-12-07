@@ -73,8 +73,9 @@ model User {
   lastLoginAt   DateTime? @map("last_login_at")
 
   // Relations
-  accounts Account[]
-  sessions Session[]
+  accounts  Account[]
+  sessions  Session[]
+  auditLogs AuditLog[]
 
   // Boond Integration
   boondResourceId String? @unique @map("boond_resource_id")
@@ -151,11 +152,14 @@ model AuditLog {
   action    String
   entity    String
   entityId  String?  @map("entity_id")
-  oldValue  String?  @map("old_value")
-  newValue  String?  @map("new_value")
+  oldValue  String?  @map("old_value") @db.Text
+  newValue  String?  @map("new_value") @db.Text
   ipAddress String?  @map("ip_address")
   userAgent String?  @map("user_agent")
   createdAt DateTime @default(now()) @map("created_at")
+
+  // Relation
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([entity, entityId])
