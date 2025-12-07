@@ -1,0 +1,328 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Opération réussie",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "noResults": "Aucun résultat",
+    "required": "Requis",
+    "optional": "Optionnel"
+  },
+  "nav": {
+    "home": "Accueil",
+    "sap": "SAP",
+    "ict": "ICT",
+    "cyber": "Cybersécurité",
+    "careers": "Carrières",
+    "contact": "Contact",
+    "backoffice": "Back-office",
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "title": "L'union européenne de l'expertise digitale",
+    "subtitle": "Votre ESN de référence en Europe, née dans le SAP, enrichie par l'ICT, renforcée par la cybersécurité.",
+    "cta": "Découvrir nos expertises",
+    "ctaSecondary": "Nous contacter"
+  },
+  "home": {
+    "expertiseTitle": "Une croissance portée par 4 expertises stratégiques",
+    "sapCard": {
+      "year": "2006",
+      "title": "SAP",
+      "description": "Notre ADN. Spécialistes ECC puis S/4HANA, nous sommes SAP Silver Partner avec une force de frappe sur les projets les plus complexes."
+    },
+    "ictCard": {
+      "year": "2019",
+      "title": "ICT",
+      "description": "Face à l'accélération du cloud et du digital, un pôle agile dédié aux infrastructures critiques et à l'intelligence artificielle opérationnelle."
+    },
+    "cyberCard": {
+      "year": "2025",
+      "title": "Cybersécurité",
+      "description": "Une offre complète de sécurité by design, en conformité avec les nouvelles régulations européennes (RGPD, NIS2, DORA, CRA)."
+    },
+    "iaCard": {
+      "year": "2026",
+      "title": "Intelligence Artificielle",
+      "description": "Nos consultants IA accompagnent nos clients dans l'intégration de copilotes et d'outils d'automatisation intelligente."
+    },
+    "teamTitle": "Une équipe européenne, engagée et opérationnelle",
+    "teamDescription": "Plus de 210 consultants répartis à travers le Luxembourg (siège à Bascharage), Paris, Bruxelles et Barcelone.",
+    "valueProposition": {
+      "excellence": "Excellence technique continue",
+      "excellenceDesc": "Certifications, veille, R&D",
+      "rigor": "Rigueur de gestion de projet",
+      "rigorDesc": "Gouvernance, delivery, qualité",
+      "proximity": "Proximité humaine",
+      "proximityDesc": "Nos clients ont des visages, pas des numéros"
+    }
+  },
+  "sap": {
+    "title": "SAP",
+    "subtitle": "L'ERP au service de la performance et de la continuité métier",
+    "intro": "Chez EBMC GROUP, SAP n'est pas un simple outil : c'est le socle historique de notre expertise depuis notre création en 2006.",
+    "migration": {
+      "title": "Migration ECC → S/4HANA",
+      "brownfield": "Migration technique avec continuité métier",
+      "greenfield": "Refonte totale des processus, nouvelle architecture",
+      "selective": "Approche hybride, adaptée aux enjeux complexes"
+    },
+    "cloud": {
+      "title": "Cloud SAP (RISE & S/4HANA Cloud)",
+      "audit": "Audit & préparation à la migration RISE",
+      "integration": "Intégration avec hyperscalers (AWS, Azure, GCP)",
+      "deployment": "Déploiement modulaire (public / private cloud)"
+    },
+    "modules": {
+      "title": "Modules fonctionnels",
+      "finance": "Finance & contrôle de gestion : FI / CO",
+      "logistics": "Achats & logistique : MM / SD / EWM",
+      "production": "Production & qualité : PP / QM",
+      "hr": "RH & talents : HCM / SuccessFactors",
+      "crm": "Relation client : SAP CX / CRM"
+    },
+    "stats": {
+      "consultants": "+2500 consultants SAP qualifiés",
+      "experience": "+19 ans d'expertise terrain",
+      "partner": "SAP Silver Partner"
+    }
+  },
+  "ict": {
+    "title": "ICT",
+    "subtitle": "Infrastructure, Cloud, Développement & IA : l'innovation utile",
+    "intro": "Depuis 2019, notre pôle ICT agit comme un catalyseur de performance pour nos clients.",
+    "infrastructure": {
+      "title": "Infrastructure & Cloud",
+      "description": "Construire des fondations robustes et évolutives",
+      "multicloud": "Expertise multi-cloud : AWS, Azure, Google Cloud",
+      "hybrid": "Déploiements hybrides ou full cloud",
+      "resilience": "Résilience intégrée : PCA/PRA, supervision 24/7"
+    },
+    "development": {
+      "title": "Développement d'applications métier",
+      "description": "Coder l'agilité métier, sans compromis sur la robustesse",
+      "backend": "Backend : Java, .NET, Node.js, Python",
+      "frontend": "Frontend : React, Angular, Vue.js",
+      "mobile": "Mobile : Flutter, React Native"
+    },
+    "data": {
+      "title": "Data & Intelligence Artificielle",
+      "description": "Transformer vos données en leviers de décision",
+      "pipelines": "Pipelines data : ETL/ELT, ingestion temps réel",
+      "ai": "IA générative : copilotes, automation documentaire",
+      "bi": "BI & visualisation : Power BI, Tableau, SAC"
+    },
+    "devops": {
+      "title": "DevOps & Automatisation",
+      "description": "Accélérer le delivery, fiabiliser les opérations",
+      "cicd": "CI/CD avancé (GitLab CI, Jenkins)",
+      "iac": "Infrastructure as Code : Terraform, Ansible",
+      "observability": "Observabilité : Grafana, Prometheus"
+    }
+  },
+  "cyber": {
+    "title": "Cybersécurité",
+    "subtitle": "Résilience numérique et conformité règlementaire intégrée",
+    "intro": "Depuis 2025, nous avons bâti une offre de cybersécurité complète, modulaire et intégrée.",
+    "audit": {
+      "title": "Audit & Pentesting",
+      "description": "Identifier, tester, corriger",
+      "security": "Audits de sécurité applicative, réseau, cloud et mobile",
+      "pentest": "Tests d'intrusion internes / externes",
+      "vulnerability": "Analyses de vulnérabilités, revues de code"
+    },
+    "compliance": {
+      "title": "Conformité réglementaire",
+      "description": "Anticiper les exigences et réduire les risques juridiques",
+      "rgpd": "RGPD : privacy by design, gouvernance des données",
+      "regulations": "NIS2, DORA, Cyber Resilience Act, ISO 27001, HDS",
+      "audit": "Audit de conformité, accompagnement à la certification"
+    },
+    "soc": {
+      "title": "SOC managé",
+      "description": "Renforcer la vigilance permanente",
+      "monitoring": "SOC managé 24/7 depuis le Luxembourg",
+      "edr": "Solutions EDR, SIEM, SOAR",
+      "threat": "Threat intelligence & analyse comportementale"
+    },
+    "zeroTrust": {
+      "title": "Architecture Zero Trust",
+      "description": "Construire des fondations inattaquables",
+      "design": "Design Zero Trust : micro-segmentation",
+      "iam": "IAM / PAM : gestion des identités et accès",
+      "mfa": "MFA, chiffrement, politiques de sécurité"
+    }
+  },
+  "careers": {
+    "title": "Carrières",
+    "subtitle": "Rejoignez un groupe IT européen en pleine croissance",
+    "intro": "Chez EBMC GROUP, nous croyons qu'un projet tech ambitieux commence par des talents bien accompagnés.",
+    "promise": "Notre promesse : accélérer votre carrière tout en respectant votre équilibre.",
+    "integration": {
+      "title": "Parcours d'intégration structuré",
+      "mentoring": "Mentorat senior sur 12 à 18 mois",
+      "onboarding": "Onboarding digital et personnalisé"
+    },
+    "growth": {
+      "title": "Montée en compétence continue",
+      "training": "Plan de formation individuel et certifiant",
+      "certifications": "Prise en charge de vos certifications"
+    },
+    "projects": {
+      "title": "Projets à la hauteur de vos ambitions",
+      "international": "Missions internationales en environnement multiculturel",
+      "technologies": "Technologies de pointe : S/4HANA Cloud, SAP BTP, Zero Trust"
+    },
+    "culture": {
+      "title": "Culture d'entreprise humaine",
+      "management": "Management de proximité, feedback régulier",
+      "remote": "Télétravail partiel, séminaires réguliers"
+    },
+    "cta": "Découvrez nos offres",
+    "ctaEmail": "Envoyez votre CV"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Vous avez un projet ? Une question ? Notre équipe est à votre écoute.",
+    "form": {
+      "name": "Nom complet",
+      "namePlaceholder": "Jean Dupont",
+      "email": "Email",
+      "emailPlaceholder": "jean.dupont@entreprise.com",
+      "company": "Entreprise",
+      "companyPlaceholder": "Nom de votre entreprise",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+352 XXX XXX XXX",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Sélectionnez un sujet",
+      "subjects": {
+        "sap": "Projet SAP",
+        "ict": "Infrastructure / Cloud / Dev",
+        "cyber": "Cybersécurité",
+        "careers": "Opportunité de carrière",
+        "partnership": "Partenariat",
+        "other": "Autre demande"
+      },
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre projet ou votre demande...",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours...",
+      "successTitle": "Message envoyé !",
+      "successMessage": "Nous avons bien reçu votre message et vous répondrons dans les plus brefs délais.",
+      "errorTitle": "Erreur d'envoi",
+      "errorMessage": "Une erreur est survenue. Veuillez réessayer ou nous contacter directement."
+    },
+    "info": {
+      "headquarters": "Siège",
+      "headurquartersAddress": "Bascharage, Luxembourg",
+      "innovation": "Bureau innovation",
+      "innovationAddress": "Barcelone, Espagne",
+      "email": "Email",
+      "emailAddress": "contact@ebmcgroup.eu",
+      "phone": "Téléphone",
+      "phoneNumber": "+352 XXX XXX XXX"
+    }
+  },
+  "footer": {
+    "description": "EBMC GROUP - Votre ESN de référence en Europe. Expertise SAP, ICT, Cybersécurité et Intelligence Artificielle.",
+    "navigation": "Navigation",
+    "services": "Services",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Gestion des cookies",
+    "copyright": "© {year} EBMC GROUP. Tous droits réservés.",
+    "followUs": "Suivez-nous"
+  },
+  "auth": {
+    "loginTitle": "Connexion au back-office",
+    "loginSubtitle": "Connectez-vous avec votre compte autorisé",
+    "loginWithGoogle": "Continuer avec Google",
+    "loginWithApple": "Continuer avec Apple",
+    "loginWithMicrosoft": "Continuer avec Microsoft",
+    "loginWithBoond": "Continuer avec Boondmanager",
+    "loginWithEmail": "Continuer avec Email",
+    "emailPlaceholder": "votre@email.com",
+    "sendMagicLink": "Envoyer le lien de connexion",
+    "magicLinkSent": "Un lien de connexion a été envoyé à votre adresse email.",
+    "checkEmail": "Vérifiez votre boîte de réception",
+    "unauthorized": "Votre compte n'est pas autorisé à accéder au back-office.",
+    "contactAdmin": "Contactez un administrateur pour obtenir l'accès.",
+    "logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter ?"
+  },
+  "backoffice": {
+    "dashboard": {
+      "title": "Tableau de bord",
+      "welcome": "Bienvenue, {name}",
+      "recentContacts": "Contacts récents",
+      "pendingRequests": "Demandes en attente",
+      "totalUsers": "Utilisateurs",
+      "quickActions": "Actions rapides"
+    },
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "addUser": "Ajouter un utilisateur",
+      "editUser": "Modifier l'utilisateur",
+      "deleteUser": "Supprimer l'utilisateur",
+      "email": "Email",
+      "role": "Rôle",
+      "status": "Statut",
+      "lastLogin": "Dernière connexion",
+      "actions": "Actions",
+      "roles": {
+        "SUPER_ADMIN": "Super Admin",
+        "ADMIN": "Administrateur",
+        "EDITOR": "Éditeur",
+        "VIEWER": "Lecteur"
+      },
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+    },
+    "contacts": {
+      "title": "Demandes de contact",
+      "view": "Voir le détail",
+      "markAsProcessed": "Marquer comme traité",
+      "sendToBoond": "Envoyer vers Boond",
+      "status": {
+        "NEW": "Nouveau",
+        "PROCESSING": "En cours",
+        "SENT_TO_BOOND": "Envoyé à Boond",
+        "REPLIED": "Répondu",
+        "ARCHIVED": "Archivé"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "general": "Général",
+      "email": "Email",
+      "integrations": "Intégrations",
+      "security": "Sécurité"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Page non trouvée",
+      "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+      "backHome": "Retour à l'accueil"
+    },
+    "500": {
+      "title": "Erreur serveur",
+      "description": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+      "retry": "Réessayer"
+    },
+    "auth": {
+      "title": "Erreur d'authentification",
+      "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page.",
+      "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter."
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# =============================================================================
+# EBMC GROUP - Docker Compose Override (Development)
+# =============================================================================
+# Ce fichier est automatiquement fusionné avec docker-compose.yml
+# Pour le désactiver: docker compose -f docker-compose.yml up
+# =============================================================================
+
+services:
+  app:
+    # En dev, on peut monter le code source pour hot reload
+    # Décommenter pour activer le mode développement :
+    # build:
+    #   target: deps
+    # command: npm run dev
+    # volumes:
+    #   - .:/app
+    #   - /app/node_modules
+    #   - /app/.next
+    environment:
+      - NODE_ENV=development
+    
+  # Activer Adminer par défaut en dev
+  adminer:
+    profiles: []  # Override le profile "tools" pour l'activer par défaut
+
+  # Désactiver Traefik en dev
+  traefik:
+    profiles:
+      - never  # Ne jamais démarrer en dev
