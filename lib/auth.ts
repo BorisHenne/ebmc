@@ -85,8 +85,8 @@ export const authConfig: NextAuthConfig = {
       issuer: `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID || "common"}/v2.0`,
     }),
 
-    // Boondmanager Custom OAuth
-    BoondProvider,
+    // Boondmanager Custom OAuth (cast to any for custom profile fields)
+    BoondProvider as any,
 
     // Email Magic Link (backup)
     EmailProvider({
