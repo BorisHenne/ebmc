@@ -1,6 +1,6 @@
 # =============================================================================
 # EBMC GROUP - Dockerfile Multi-Stage
-# Next.js 15 + React 19 + Prisma
+# Next.js 15 + React 19 + Prisma (MySQL)
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -12,37 +12,37 @@ RUN apk add --no-cache libc6-compat openssl
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files AND prisma schema (needed for postinstall)
 COPY package.json package-lock.json* ./
-COPY prisma ./prisma/
+COPY prisma ./prisma
 
-# Install dependencies avec --legacy-peer-deps pour les conflits
+# Use npm install instead of npm ci to handle new packages not in lock file
 RUN npm install --legacy-peer-deps
-
-# Generate Prisma client
-RUN npx prisma generate
 
 # -----------------------------------------------------------------------------
 # Stage 2: Builder
 # -----------------------------------------------------------------------------
 FROM node:20-alpine AS builder
 
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
-# Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Environment variables needed for build
+# Generate Prisma Client (use local version from node_modules to avoid global version conflicts)
+RUN ./node_modules/.bin/prisma generate
+
+# Build the application
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Build args for URLs
 ARG NEXT_PUBLIC_APP_URL
 ARG NEXTAUTH_URL
 ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
 ENV NEXTAUTH_URL=${NEXTAUTH_URL}
 
-# Disable telemetry during build
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Build the application
 RUN npm run build
 
 # -----------------------------------------------------------------------------
@@ -50,32 +50,34 @@ RUN npm run build
 # -----------------------------------------------------------------------------
 FROM node:20-alpine AS runner
 
+RUN apk add --no-cache openssl
+
 WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Security: Run as non-root user
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Install required runtime dependencies
-RUN apk add --no-cache openssl
-
-# Set production environment
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Copy built application
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+# Copy necessary files with correct ownership
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-# Set correct permissions
-RUN chown -R nextjs:nodejs /app
+# Ensure public directory is readable
+RUN mkdir -p ./public/images && chown -R nextjs:nodejs ./public
+
+# Copy standalone build
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy full node_modules for Prisma CLI and runtime
+COPY --from=builder /app/node_modules ./node_modules
 
 USER nextjs
 
-# Expose port
 EXPOSE 3000
 
 ENV PORT=3000
@@ -85,5 +87,4 @@ ENV HOSTNAME="0.0.0.0"
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
 
-# Start the application
 CMD ["node", "server.js"]
