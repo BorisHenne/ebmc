@@ -74,7 +74,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/node_modules ./node_modules
 
 # Ensure public directory is readable (after all COPYs)
-RUN mkdir -p ./public/images && chown -R nextjs:nodejs ./public
+RUN mkdir -p ./public/images && chown -R nextjs:nodejs ./public && chmod -R 755 ./public
 
 USER nextjs
 
