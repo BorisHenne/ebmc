@@ -7,9 +7,141 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Contact form submissions
-model Contact {
+// =============================================================================
+// USERS & AUTH
+// =============================================================================
+
+model User {
   id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(EDITOR)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+// =============================================================================
+// JOB OFFERS
+// =============================================================================
+
+model JobOffer {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  description String
+  department  Department
+  location    String
+  type        ContractType
+  experience  String?
+  salary      String?
+  skills      String[]
+  published   Boolean       @default(false)
+  boondId     String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  applications Application[]
+
+  @@map("job_offers")
+}
+
+enum Department {
+  SAP
+  ICT
+  CYBER
+  OTHER
+}
+
+enum ContractType {
+  CDI
+  CDD
+  FREELANCE
+  STAGE
+  ALTERNANCE
+}
+
+// =============================================================================
+// CANDIDATES
+// =============================================================================
+
+model Candidate {
+  id          String           @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String           @unique
+  phone       String?
+  linkedin    String?
+  resumeUrl   String?
+  skills      String[]
+  experience  String?
+  status      CandidateStatus  @default(NEW)
+  notes       String?
+  boondId     String?
+  source      String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  applications Application[]
+
+  @@map("candidates")
+}
+
+enum CandidateStatus {
+  NEW
+  CONTACTED
+  INTERVIEW
+  TECHNICAL_TEST
+  OFFER
+  HIRED
+  REJECTED
+  ARCHIVED
+}
+
+// =============================================================================
+// APPLICATIONS
+// =============================================================================
+
+model Application {
+  id          String            @id @default(cuid())
+  candidateId String
+  jobOfferId  String
+  status      ApplicationStatus @default(PENDING)
+  coverLetter String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobOffer  JobOffer  @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, jobOfferId])
+  @@map("applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  INTERVIEW_SCHEDULED
+  REJECTED
+  ACCEPTED
+}
+
+// =============================================================================
+// CONTACT FORM
+// =============================================================================
+
+model Contact {
+  id        String        @id @default(cuid())
   name      String
   email     String
   company   String?
@@ -17,8 +149,8 @@ model Contact {
   subject   String
   message   String
   status    ContactStatus @default(NEW)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@map("contacts")
 }
@@ -30,7 +162,26 @@ enum ContactStatus {
   ARCHIVED
 }
 
-// Newsletter subscribers
+// =============================================================================
+// SITE SETTINGS
+// =============================================================================
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  label     String
+  category  String   @default("general")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+// =============================================================================
+// NEWSLETTER
+// =============================================================================
+
 model Subscriber {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -38,18 +189,4 @@ model Subscriber {
   createdAt DateTime @default(now())
 
   @@map("subscribers")
-}
-
-// Page views for analytics
-model PageView {
-  id        String   @id @default(cuid())
-  path      String
-  referrer  String?
-  userAgent String?
-  ip        String?
-  createdAt DateTime @default(now())
-
-  @@index([path])
-  @@index([createdAt])
-  @@map("page_views")
 }

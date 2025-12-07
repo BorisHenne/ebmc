@@ -12,6 +12,8 @@ const navigation = [
   { name: "SAP", href: "/sap" },
   { name: "ICT", href: "/ict" },
   { name: "Cybersécurité", href: "/cyber" },
+  { name: "Offres", href: "/offres" },
+  { name: "Candidats", href: "/candidats" },
   { name: "Carrières", href: "/carrieres" },
   { name: "Contact", href: "/contact" },
 ];
@@ -23,12 +25,12 @@ export function Header() {
     <header className="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex flex-col items-center leading-none">
           <span className="text-2xl font-bold tracking-tight">
             <span className="text-ebmc-black">EBM</span>
             <span className="text-ebmc-teal">C</span>
           </span>
-          <span className="text-sm font-semibold text-ebmc-gray tracking-widest">
+          <span className="text-[10px] font-semibold text-ebmc-gray tracking-[0.3em] uppercase">
             GROUP
           </span>
         </Link>
