@@ -66,15 +66,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 
-# Ensure public directory is readable
-RUN mkdir -p ./public/images && chown -R nextjs:nodejs ./public
-
 # Copy standalone build
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Copy full node_modules for Prisma CLI and runtime
 COPY --from=builder /app/node_modules ./node_modules
+
+# Ensure public directory is readable (after all COPYs)
+RUN mkdir -p ./public/images && chown -R nextjs:nodejs ./public
 
 USER nextjs
 
