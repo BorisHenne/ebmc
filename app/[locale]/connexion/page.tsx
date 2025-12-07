@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { signIn } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -15,7 +15,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BackgroundBeams } from '@/components/ui/background-beams'
 
-export default function LoginPage() {
+function LoginContent() {
   const t = useTranslations('auth')
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/backoffice'
@@ -237,5 +237,28 @@ export default function LoginPage() {
         </Card>
       </motion.div>
     </div>
+  )
+}
+
+function LoginFallback() {
+  return (
+    <div className="relative min-h-screen flex items-center justify-center bg-dark-900 px-4">
+      <BackgroundBeams className="opacity-40" />
+      <div className="relative z-10 w-full max-w-md">
+        <Card className="bg-white/10 backdrop-blur-xl border-white/20">
+          <CardContent className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-white" />
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginFallback />}>
+      <LoginContent />
+    </Suspense>
   )
 }

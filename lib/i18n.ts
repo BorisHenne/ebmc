@@ -9,16 +9,29 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "fr";
 
 // Configuration next-intl
-export default getRequestConfig(async ({ locale }) => {
+export default getRequestConfig(async ({ requestLocale }) => {
+  // Get the requested locale
+  const locale = await requestLocale;
+
   // Valider que le locale entrant est supporté
-  if (!locales.includes(locale as Locale)) {
+  if (!locale || !locales.includes(locale as Locale)) {
     notFound();
   }
 
   return {
+    locale,
     messages: (await import(`../messages/${locale}.json`)).default,
     timeZone: "Europe/Luxembourg",
     now: new Date(),
+    // Ignorer les erreurs de messages manquants en prod
+    onError(error) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(error.message);
+      }
+    },
+    getMessageFallback({ namespace, key }) {
+      return `${namespace}.${key}`;
+    },
     formats: {
       dateTime: {
         short: {
