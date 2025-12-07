@@ -7,8 +7,7 @@ import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple, FaMicrosoft } from 'react-icons/fa'
-import { SiBoondmanager } from 'react-icons/si'
-import { Mail, ArrowLeft, Loader2, AlertCircle } from 'lucide-react'
+import { Mail, ArrowLeft, Loader2, AlertCircle, Briefcase } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -167,7 +166,7 @@ export default function LoginPage() {
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
-                    <SiBoondmanager className="h-5 w-5 mr-2" />
+                    <Briefcase className="h-5 w-5 mr-2" />
                     {t('continueWith')} Boondmanager
                   </>
                 )}
