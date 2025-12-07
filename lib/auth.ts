@@ -192,8 +192,8 @@ export const authConfig: NextAuthConfig = {
     },
 
     // Callback JWT (si on utilisait JWT strategy)
-    async jwt({ token, user, account }) {
-      if (user) {
+    async jwt({ token, user }) {
+      if (user && user.id) {
         token.id = user.id;
         const dbUser = await prisma.user.findUnique({
           where: { id: user.id },
