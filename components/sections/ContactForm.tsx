@@ -14,8 +14,7 @@ import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 
 const contactSchema = z.object({
-  firstName: z.string().min(2, 'Minimum 2 caractères').max(50),
-  lastName: z.string().min(2, 'Minimum 2 caractères').max(50),
+  name: z.string().min(2, 'Minimum 2 caractères').max(100),
   email: z.string().email('Email invalide'),
   company: z.string().max(100).optional(),
   phone: z
@@ -126,36 +125,20 @@ export function ContactForm({ locale, defaultSubject }: Props) {
         )}
       </AnimatePresence>
 
-      {/* Name row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <Label htmlFor="firstName" required error={!!errors.firstName}>
-            {t('fields.firstName')}
-          </Label>
-          <Input
-            id="firstName"
-            {...register('firstName')}
-            error={!!errors.firstName}
-            placeholder={t('placeholders.firstName')}
-          />
-          {errors.firstName && (
-            <p className="text-sm text-red-500">{errors.firstName.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="lastName" required error={!!errors.lastName}>
-            {t('fields.lastName')}
-          </Label>
-          <Input
-            id="lastName"
-            {...register('lastName')}
-            error={!!errors.lastName}
-            placeholder={t('placeholders.lastName')}
-          />
-          {errors.lastName && (
-            <p className="text-sm text-red-500">{errors.lastName.message}</p>
-          )}
-        </div>
+      {/* Name */}
+      <div className="space-y-2">
+        <Label htmlFor="name" required error={!!errors.name}>
+          {t('fields.name')}
+        </Label>
+        <Input
+          id="name"
+          {...register('name')}
+          error={!!errors.name}
+          placeholder={t('placeholders.name')}
+        />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.name.message}</p>
+        )}
       </div>
 
       {/* Email & Phone row */}

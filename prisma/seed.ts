@@ -101,8 +101,7 @@ async function main() {
     if (!sampleContact) {
       await prisma.contactSubmission.create({
         data: {
-          firstName: 'Jean',
-          lastName: 'Dupont',
+          name: 'Jean Dupont',
           email: 'test@example.com',
           company: 'Entreprise Test',
           phone: '+33 1 23 45 67 89',
