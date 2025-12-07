@@ -16,8 +16,8 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
-# Install dependencies (npm install si pas de lockfile)
-RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+# Install dependencies avec --legacy-peer-deps pour les conflits
+RUN npm install --legacy-peer-deps
 
 # Generate Prisma client
 RUN npx prisma generate
