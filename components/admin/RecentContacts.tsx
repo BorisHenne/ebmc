@@ -11,8 +11,7 @@ import { cn } from '@/lib/utils'
 
 type Contact = {
   id: string
-  firstName: string
-  lastName: string
+  name: string
   email: string
   subject: string
   status: string
@@ -77,7 +76,7 @@ export function RecentContacts({
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <p className="font-medium text-gray-900 dark:text-white truncate">
-                        {contact.firstName} {contact.lastName}
+                        {contact.name}
                       </p>
                       <span
                         className={cn(
