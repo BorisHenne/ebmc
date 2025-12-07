@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import AppleProvider from "next-auth/providers/apple";
-import AzureADProvider from "next-auth/providers/azure-ad";
+import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import EmailProvider from "next-auth/providers/email";
 import type { NextAuthConfig } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
@@ -78,11 +78,11 @@ export const authConfig: NextAuthConfig = {
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
     }),
 
-    // Microsoft Azure AD OAuth
-    AzureADProvider({
+    // Microsoft Entra ID (formerly Azure AD)
+    MicrosoftEntraID({
       clientId: process.env.MICROSOFT_CLIENT_ID!,
       clientSecret: process.env.MICROSOFT_CLIENT_SECRET!,
-      tenantId: process.env.MICROSOFT_TENANT_ID || "common",
+      issuer: `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID || "common"}/v2.0`,
     }),
 
     // Boondmanager Custom OAuth
