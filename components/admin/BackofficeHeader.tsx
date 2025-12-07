@@ -37,7 +37,7 @@ export function BackofficeHeader({ user }: { user: User }) {
       {/* Actions */}
       <div className="flex items-center gap-2">
         {/* Language Switcher */}
-        <LanguageSwitcher variant="compact" />
+        <LanguageSwitcher />
 
         {/* Theme Toggle */}
         <Button
