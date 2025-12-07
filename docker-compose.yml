@@ -5,27 +5,25 @@
 
 services:
   # ---------------------------------------------------------------------------
-  # MySQL Database
+  # PostgreSQL Database
   # ---------------------------------------------------------------------------
   db:
-    image: mysql:8.0
+    image: postgres:16-alpine
     container_name: ebmc-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-ebmc}
+      POSTGRES_USER: ${POSTGRES_USER:-ebmc}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ebmc_secret}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - ebmc-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ebmc} -d ${POSTGRES_DB:-ebmc}"]
       interval: 5s
       timeout: 5s
       retries: 10
-    command: --default-authentication-plugin=mysql_native_password
 
   # ---------------------------------------------------------------------------
   # Next.js Application
@@ -37,34 +35,10 @@ services:
     container_name: ebmc-app
     restart: always
     ports:
-      - "${APP_PORT}:3000"
-    volumes:
-      - ./public/images:/app/public/images:ro
+      - "${APP_PORT:-3080}:3000"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}
-      - NEXTAUTH_URL=${NEXTAUTH_URL}
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
-      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
-      - APPLE_CLIENT_ID=${APPLE_CLIENT_ID:-}
-      - APPLE_CLIENT_SECRET=${APPLE_CLIENT_SECRET:-}
-      - MICROSOFT_CLIENT_ID=${MICROSOFT_CLIENT_ID:-}
-      - MICROSOFT_CLIENT_SECRET=${MICROSOFT_CLIENT_SECRET:-}
-      - MICROSOFT_TENANT_ID=${MICROSOFT_TENANT_ID:-common}
-      - BOOND_CLIENT_ID=${BOOND_CLIENT_ID:-}
-      - BOOND_CLIENT_SECRET=${BOOND_CLIENT_SECRET:-}
-      - BOOND_INSTANCE=${BOOND_INSTANCE:-}
-      - BOOND_API_USER=${BOOND_API_USER:-}
-      - BOOND_API_TOKEN=${BOOND_API_TOKEN:-}
-      - SMTP_HOST=${SMTP_HOST:-}
-      - SMTP_PORT=${SMTP_PORT:-587}
-      - SMTP_USER=${SMTP_USER:-}
-      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
-      - SMTP_FROM=${SMTP_FROM:-}
-      - MAKE_WEBHOOK_CONTACT=${MAKE_WEBHOOK_CONTACT:-}
-      - MAKE_WEBHOOK_CANDIDATE=${MAKE_WEBHOOK_CANDIDATE:-}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-ebmc}:${POSTGRES_PASSWORD:-ebmc_secret}@db:5432/${POSTGRES_DB:-ebmc}?schema=public
     depends_on:
       db:
         condition: service_healthy
@@ -72,7 +46,7 @@ services:
       - ebmc-network
 
   # ---------------------------------------------------------------------------
-  # Adminer (Database GUI) - Optionnel
+  # Adminer (Database GUI) - Optional
   # ---------------------------------------------------------------------------
   adminer:
     image: adminer:latest
@@ -88,7 +62,7 @@ services:
       - ebmc-network
 
 volumes:
-  mysql_data:
+  postgres_data:
 
 networks:
   ebmc-network:

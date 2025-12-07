@@ -1,14 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 type SpotlightProps = {
   className?: string;
   fill?: string;
 };
 
-export const Spotlight = ({ className, fill }: SpotlightProps) => {
+export const Spotlight = ({ className, fill = "#2AA198" }: SpotlightProps) => {
   return (
     <svg
       className={cn(
@@ -26,7 +26,7 @@ export const Spotlight = ({ className, fill }: SpotlightProps) => {
           rx="1924.71"
           ry="273.501"
           transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-          fill={fill || "white"}
+          fill={fill}
           fillOpacity="0.21"
         ></ellipse>
       </g>
